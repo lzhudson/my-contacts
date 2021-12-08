@@ -35,8 +35,32 @@ class ContactController {
     return response.json(contact);
   }
 
-  update() {
+  async update(request, response) {
     // update register
+    const { id } = request.params;
+    const {
+      name, phone, email, category_id,
+    } = request.body;
+
+    const contactExists = await ContactsRepository.findById(id);
+
+    if (!contactExists) {
+      return response.status(404).json({ error: 'User not found' });
+    }
+
+    if (!name) {
+      return response.status(400).json({ error: 'Name is required' });
+    }
+    const contactByEmail = await ContactsRepository.findByEmail(email);
+    if (contactByEmail && contactByEmail.id !== id) {
+      return response.status(400).json({ error: 'This is e-mail is already in use' });
+    }
+
+    const contact = await ContactsRepository.update(id, {
+      name, email, phone, category_id,
+    });
+
+    return response.json(contact);
   }
 
   async delete(request, response) {

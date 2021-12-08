@@ -7,8 +7,14 @@ class ContactController {
     // get multiplies registers
   }
 
-  show() {
+  async show(request, response) {
     // get one register
+    const { id } = request.params;
+    const contact = await ContactsRepository.findById(id);
+    if (!contact) {
+      return response.status(404).json({ error: 'User not found' });
+    }
+    return response.json(contact);
   }
 
   store() {

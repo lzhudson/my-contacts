@@ -1,11 +1,11 @@
-const { uuid } = require('uuidv4');
+const { v4 } = require('uuid');
 
 const contacts = [
   {
-    id: uuid(),
+    id: v4(),
     name: 'Hudson Holanda',
     email: 'hudson@gmail.com',
-    category_id: uuid(),
+    category_id: v4(),
   },
 ];
 class ContactsRepository {

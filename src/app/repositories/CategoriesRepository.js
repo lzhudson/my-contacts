@@ -32,6 +32,11 @@ class CategoriesController {
     `, [name, id]);
     return row;
   }
+
+  async delete(id) {
+    const deleteOp = await db.query('DElETE FROM categories WHERE id = $1', [id]);
+    return deleteOp;
+  }
 }
 
 module.exports = new CategoriesController();

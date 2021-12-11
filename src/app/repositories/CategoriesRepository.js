@@ -1,8 +1,9 @@
 const db = require('../../database');
 
 class CategoriesController {
-  findAll() {
-
+  async findAll() {
+    const rows = await db.query('SELECT * FROM categories ORDER BY name');
+    return rows;
   }
 
   async create({ name }) {
